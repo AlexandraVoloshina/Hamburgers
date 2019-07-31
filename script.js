@@ -1,16 +1,18 @@
-var HamburgerObj = {
-  SIZE_SMALL: [50, 20],
-  SIZE_BIG: [100, 40],
-  STUFFING_CHEESE: [10, 20],
-  STUFFING_SALATE: [20, 5],
-  TOPPING_POTETOES: [15, 10],
-  TOPPING_SAUCE: [15, 0],
-  TOPPING_MAYO: [20, 5]
-};
+Hamburger.SIZE_SMALL = [50, 20];
+Hamburger.SIZE_BIG = [100, 40];
+Hamburger.STUFFING_CHEESE = [10, 20];
+Hamburger.STUFFING_SALATE = [20, 5];
+Hamburger.TOPPING_POTETOES = [15, 10];
+Hamburger.TOPPING_SAUCE = [15, 0];
+Hamburger.TOPPING_MAYO = [20, 5];
 
 function Hamburger(size, stuffing){
-  this.size = size;
-  this.stuffing = stuffing;
+  
+  this.objHamburger = {
+    size: size,
+    stuffing: stuffing
+  };
+
   var topping = [];
 
   this.addTopping = function(toppingItem){  
@@ -18,30 +20,28 @@ function Hamburger(size, stuffing){
   };
 
   this.calculateCalories = function(){
-    var toppingSum = 0;
-    for (var i = 0; i < topping.length; i++){
-    toppingSum += topping[i][1];
-    }
-    return this.size[1] + this.stuffing[1] + toppingSum;
+      var toppingSum = topping.reduce(function(sum, current) {
+        return (topping.length === 1) ? +current.slice(1) : sum + +current.slice(1);
+      }, 0);
+    return size[1] + stuffing[1] + toppingSum;
   };
 
   this.calculatePrice = function(){
-    var toppingCal = 0;
-    for (var i = 0; i < topping.length; i++){
-    toppingCal += topping[i][0];
-    }
+    var toppingCal = topping.reduce(function(sum, current) {    
+        return (topping.length === 1) ? +current[0] : sum + +current[0];   
+    }, 0);
     return size[0] + stuffing[0] + toppingCal;
   };
 }
 
-var hamburger = new Hamburger(HamburgerObj.SIZE_SMALL, HamburgerObj.STUFFING_CHEESE);
+var hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
 console.log(hamburger);
-console.log(hamburger.addTopping(HamburgerObj.TOPPING_MAYO));
+hamburger.addTopping(Hamburger.TOPPING_MAYO);
 console.log("Calories: " + hamburger.calculateCalories());
 console.log("Price: " + hamburger.calculatePrice());
-hamburger.addTopping(HamburgerObj.TOPPING_SAUCE);
+hamburger.addTopping(Hamburger.TOPPING_SAUCE);
 console.log("Calories: " + hamburger.calculateCalories());
-console.log("Price: " + hamburger.calculatePrice());// var ham = Hamburger.addTopping;
+console.log("Price: " + hamburger.calculatePrice());
 
 
 // // маленький гамбургер с начинкой из сыра

@@ -7,11 +7,9 @@ Hamburger.TOPPING_SAUCE = [15, 0];
 Hamburger.TOPPING_MAYO = [20, 5];
 
 function Hamburger(size, stuffing){
-  
-  this.objHamburger = {
-    size: size,
-    stuffing: stuffing
-  };
+
+  Hamburger.size = size;
+  Hamburger.stuffing = stuffing;
 
   var topping = [];
 
@@ -21,17 +19,18 @@ function Hamburger(size, stuffing){
 
   this.calculateCalories = function(){
       var toppingSum = topping.reduce(function(sum, current) {
-        return (topping.length === 1) ? +current.slice(1) : sum + +current.slice(1);
+        return sum + +current.slice(1);
       }, 0);
     return size[1] + stuffing[1] + toppingSum;
   };
 
   this.calculatePrice = function(){
     var toppingCal = topping.reduce(function(sum, current) {    
-        return (topping.length === 1) ? +current[0] : sum + +current[0];   
+        return sum + +current[0];   
     }, 0);
     return size[0] + stuffing[0] + toppingCal;
   };
+
 }
 
 var hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
